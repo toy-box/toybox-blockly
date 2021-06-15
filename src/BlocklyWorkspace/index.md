@@ -31,7 +31,7 @@ export default function App() {
         "tooltip": "Returns number of letters in the provided text.",
         "helpUrl": "http://www.w3schools.com/jsref/jsref_length_string.asp"
       },
-      code: "deps0.length"
+      code: "(VALUE || '').length"
     }
   }
   Object.keys(customBlocks)
