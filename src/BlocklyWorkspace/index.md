@@ -4,8 +4,8 @@
 import React, { useState } from "react";
 import Blockly from "blockly";
 import ZhHans from 'blockly/msg/zh-hans';
-import { BlocklyWorkspace } from "@toy-box/toybox-blockly";
 import parse from 'html-react-parser';
+import { BlocklyWorkspace, blockRegistry } from "@toy-box/toybox-blockly";
 
 Blockly.setLocale(ZhHans)
 
@@ -14,8 +14,29 @@ export default function App() {
   const [javascriptCode, setJavascriptCode] = useState("");
 
   const initialXml =
-    '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="text" x="70" y="30"><field name="TEXT"></field></block></xml>';
-  
+    '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="text" x="70" y="30"><field name="TEXT"><field></block></xml>';
+  const customBlocks = {
+    cust: {
+      json: {
+        "message0": 'length of %1',
+        "args0": [
+          {
+            "type": "input_value",
+            "name": "VALUE",
+            "check": "String"
+          }
+        ],
+        "output": "Number",
+        "colour": 160,
+        "tooltip": "Returns number of letters in the provided text.",
+        "helpUrl": "http://www.w3schools.com/jsref/jsref_length_string.asp"
+      },
+      code: "deps0.length"
+    }
+  }
+  Object.keys(customBlocks)
+    .map(key => blockRegistry(key, customBlocks[key].json, customBlocks[key].code))
+
   const toolboxCategories = {
     kind: "categoryToolbox",
     contents: [
@@ -56,11 +77,7 @@ export default function App() {
         contents: [
           {
             kind: "block",
-            type: "new_boundary_function",
-          },
-          {
-            kind: "block",
-            type: "return",
+            type: "cust",
           },
         ],
       },

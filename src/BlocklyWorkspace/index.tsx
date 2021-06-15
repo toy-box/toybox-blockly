@@ -2,6 +2,11 @@ import React, { CSSProperties, FC } from 'react';
 import Blockly from 'blockly';
 import useBlocklyWorkspace from './useBlockly';
 
+export interface CustomBlock {
+  json: Object
+  code: string
+}
+
 export interface IBlocklyWorkspaceProps {
   initialXml?: string
   toolboxConfiguration?: any
@@ -13,6 +18,7 @@ export interface IBlocklyWorkspaceProps {
   onXmlChange?: (xml: string) => void
   onInject?: (workspace: Blockly.WorkspaceSvg) => void
   onDispose?: (workspace: Blockly.WorkspaceSvg) => void
+  customBlocks?: Record<string, CustomBlock>
 }
 
 const BlocklyWorkspace: FC<IBlocklyWorkspaceProps> = ({
@@ -26,6 +32,7 @@ const BlocklyWorkspace: FC<IBlocklyWorkspaceProps> = ({
   onImportXmlError,
   onInject,
   onDispose,
+  customBlocks
 }) => {
   const editorRef = React.useRef<HTMLDivElement>(null);
   const { xml } = useBlocklyWorkspace({
@@ -37,6 +44,7 @@ const BlocklyWorkspace: FC<IBlocklyWorkspaceProps> = ({
     onImportXmlError,
     onInject,
     onDispose,
+    customBlocks
   });
   const onXmlChangeRef = React.useRef(onXmlChange);
   React.useEffect(() => {

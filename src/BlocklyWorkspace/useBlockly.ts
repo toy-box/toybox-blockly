@@ -1,6 +1,5 @@
 import React from 'react';
 import Blockly from 'blockly';
-
 import debounce from './debounce';
 import { IBlocklyWorkspaceProps } from '.';
 
@@ -29,6 +28,7 @@ const useBlocklyWorkspace = ({
   onImportXmlError,
   onInject,
   onDispose,
+  customBlocks
 }: IUseBlockWorkspaceProps) => {
   const [workspace, setWorkspace] = React.useState<Blockly.WorkspaceSvg>();
   const [xml, setXml] = React.useState(initialXml);
@@ -44,6 +44,7 @@ const useBlocklyWorkspace = ({
   }, [workspaceConfiguration]);
 
   const toolboxConfigurationRef = React.useRef(toolboxConfiguration);
+
   React.useEffect(() => {
     toolboxConfigurationRef.current = toolboxConfiguration;
     if (toolboxConfiguration && workspace) {
