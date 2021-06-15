@@ -1,5 +1,4 @@
 {
-  "private": true,
   "name": "@toy-box/toybox-blockly",
   "version": "1.0.0",
   "scripts": {
